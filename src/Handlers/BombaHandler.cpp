@@ -7,6 +7,10 @@ void BombaHandler::comunicaAtivas(std::list<Personagem*> soltas) {
     }
 }
 void BombaHandler::LimpaExplodidas() {
+    for (auto it = bombasExplodidas.begin(); it != bombasExplodidas.end(); ) {
+        delete *it;
+        it = bombasExplodidas.erase(it);
+    }
     bombasExplodidas.clear();
 }
 void BombaHandler::diminuiPavios() 

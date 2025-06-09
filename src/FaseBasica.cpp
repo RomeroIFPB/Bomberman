@@ -29,6 +29,8 @@ void FaseBasica::init()
 
 	p2->desativarObj();
 
+	bloco_handler->carregaMapa();
+
 }
 
 unsigned FaseBasica::run(SpriteBuffer &screen)
@@ -47,17 +49,16 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		bomba_handler->comunicaAtivas(personagem_handler->getSoltas());
 
 
-		//fogo_handler->comunicaExplodidas(bomba_handler->getExplodidas());
-		//fogo_handler->searchAcabados();
-
-		//bloco_handler->recebeBlocosColididos();
+		fogo_handler->comunicaExplodidas(bomba_handler->getExplodidas());
+		fogo_handler->checarColisaoPersonagem(personagem_handler->getPersonagens());
+		fogo_handler->checarColisaoBloco(bloco_handler->getBlocosAtivos());
+		
+		bloco_handler->recebeBlocosColididos(fogo_handler->getBlocosColididos());
 
 		//powerup_handler->recebeBlocosQuebrados();
 
 		//powerup_handler->SearchConsumidos();
 		//personagem_handler->recebePersonagensColididos();
-
-		std::cout << "Rotinas de update: " << tecla << std::endl;
 
 
         // ESTADO GERAL DO JOGO
@@ -65,6 +66,7 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		draw(screen);
 		system("clear");
 		show(screen);
+		std::cout << p1->getPosL() << " " << p1->getPosC() << std::endl;
 	}
     return 0;
 }

@@ -5,21 +5,56 @@ void BlocoHandler::getQuebrados() {
     // Implement logic to get broken blocks
 }
 
-void BlocoHandler::recebeBlocosColididos() {
-    // Implement logic to receive collided items
-    std::cout << "Recebendo blocos colididos..." << std::endl;
+void BlocoHandler::carregaMapa() {
+    Bloco* bloco = new Bloco(20, 70);
+    blocosAtivos.push_back(bloco);
+}
+
+void BlocoHandler::recebeBlocosColididos(std::list<Bloco*> &blocosColididos) 
+{
+    blocosQuebrados = blocosColididos;
+for (auto itQuebrado = blocosQuebrados.begin(); itQuebrado != blocosQuebrados.end(); ) {
+    bool encontrado = false;
+
+    // Percorre todos os blocos ativos
+    for (auto itAtivo = blocosAtivos.begin(); itAtivo != blocosAtivos.end(); ++itAtivo) {
+        if (*itQuebrado == *itAtivo) { // compara os ponteiros diretamente
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (encontrado) {
+        (*itQuebrado)->desativarObj();
+        itQuebrado = blocosQuebrados.erase(itQuebrado); // remove e avança
+    } else {
+        ++itQuebrado; // apenas avança
+    }
+}
+
 }
 
 void BlocoHandler::LimpaQuebrados() {
-    // Implement logic to clear broken blocks
+    for (auto it = blocosQuebrados.begin(); it != blocosQuebrados.end(); ) {
+        delete *it;
+        it = blocosQuebrados.erase(it);
+    }
+    blocosQuebrados.clear();
 }
 
 void BlocoHandler::update() {
-    // Implement update logic for blocks
+    LimpaQuebrados();
+    for (auto it = blocosAtivos.begin() ; it != blocosAtivos.end() ; ++it)
+    {
+        if ((*it)->getActive())
+            (*it)->update();
+    }
 }
 
 void BlocoHandler::draw(SpriteBase &screen, int x, int y) {
-    // Implement draw logic for blocks
-    // Example: screen.draw(sprite, x, y);
+    for (auto it = blocosAtivos.begin(); it != blocosAtivos.end(); ++it) {
+        if ((*it)->getActive())
+            (*it)->draw(screen, (*it)->getPosL(), (*it)->getPosC());
+    }
 }
 

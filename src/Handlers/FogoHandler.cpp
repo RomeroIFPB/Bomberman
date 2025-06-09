@@ -1,9 +1,41 @@
 #include "FogoHandler.hpp"
 #include <iostream>
 
-void FogoHandler::getBlocosColididos() {
-    // Implement logic to get collided blocks
+void FogoHandler::getBlocosColididos() 
+{
+    std::cout << "Oi!";
 }
+
+void FogoHandler::checarColisaoPersonagem(std::list<Personagem*> &p)
+{
+    for (auto &personagem : p) 
+    {
+        for (auto it = fogos_ativos.begin(); it != fogos_ativos.end(); ++it) 
+        {
+            if ((*it)->getPosL() == personagem->getPosL() && 
+                (*it)->getPosC() == personagem->getPosC())
+            {
+                personagens_colididos.push_back(personagem);
+            }
+        }
+    }
+}
+
+void FogoHandler::checarColisaoBloco(std::list<Bloco*> &b)
+{
+    for (auto &bloco : b) 
+    {
+        for (auto it = fogos_ativos.begin(); it != fogos_ativos.end(); ++it) 
+        {
+            if ((*it)->getPosL() == bloco->getPosL() && 
+                (*it)->getPosC() == bloco->getPosC())
+            {
+                blocos_colididos.push_back(bloco);
+            } 
+        }
+    }
+}
+
 void FogoHandler::getPersonagensColididos() {
     // Implement logic to get collided characters
 }
@@ -17,10 +49,12 @@ void FogoHandler::comunicaExplodidas(std::list<Bomba*> &explodidas)
 }
 
 void FogoHandler::LimpaAcabados() {
+    
     for (auto it = fogos_acabados.begin(); it != fogos_acabados.end(); ) {
         delete *it; // Assuming Fogo has a proper destructor
         it = fogos_acabados.erase(it);
     }
+    fogos_acabados.clear();
 }
 
 
