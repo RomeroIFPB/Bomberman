@@ -11,6 +11,8 @@ public:
 
     virtual ~PersonagemHandler() {}
 
+    std::list<Personagem*>& getPersonagens() {return personagens;};
+
     void adicionarPersonagem(Personagem *personagem);
 
     std::list<Personagem*> getSoltas() const {return soltou_bomba;};

@@ -10,7 +10,7 @@ class BombaHandler : public ObjetoDeJogo
             : ObjetoDeJogo(name, sprite, posL, posC) {}
         virtual ~BombaHandler() {}
         
-        std::list<Bomba*>& getExplodidas() const {bombasExplodidas;};
+        std::list<Bomba*>& getExplodidas() {return bombasExplodidas;};
         void comunicaAtivas(std::list<Personagem*> soltas);
         void LimpaExplodidas();
         void diminuiPavios();
