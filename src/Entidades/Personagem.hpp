@@ -13,6 +13,7 @@ class Personagem : public ObjetoDeJogo
         void diminuirVida();
         void diminuirBombas();
         void restituirBomba(){bombasDisponiveis++;};
+        void aumentarBomba(){bombasDisponiveis++; bombasMax++;};
 
         int getVidas() const { return vidas; }
         int getBombasMax() const { return bombasMax; }

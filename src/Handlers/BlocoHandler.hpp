@@ -10,7 +10,7 @@ class BlocoHandler : public ObjetoDeJogo
 
         std::list<Bloco*>& getBlocosAtivos() { return blocosAtivos; }
         void carregaMapa();
-        void getQuebrados();
+        std::list<Bloco*>& getQuebrados() {return blocosQuebrados;}
         void recebeBlocosColididos(std::list<Bloco*> &blocosColididos);
 
         void LimpaQuebrados();
