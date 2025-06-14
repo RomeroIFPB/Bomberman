@@ -15,8 +15,10 @@ void BombaHandler::LimpaExplodidas() {
 }
 void BombaHandler::diminuiPavios() 
 {
-    for(auto it = bombasAtivas.begin(); it != bombasAtivas.end(); ) {
-        if ((*it)->getPavio() <= 0) {
+    for(auto it = bombasAtivas.begin(); it != bombasAtivas.end(); ) 
+    {
+        if ((*it)->getPavio() <= 0) 
+        {
             bombasExplodidas.push_back(*it);
             (*it)->getDono()->restituirBomba();
             it = bombasAtivas.erase(it);

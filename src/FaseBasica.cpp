@@ -55,9 +55,9 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		
 		bloco_handler->recebeBlocosColididos(fogo_handler->getBlocosColididos());
 
-		//powerup_handler->recebeBlocosQuebrados();
+		powerup_handler->recebeBlocosQuebrados(bloco_handler->getQuebrados());
 
-		//powerup_handler->SearchConsumidos();
+		//powerup_handler->SearchConsumidos(personagem_handler->getPersonagens());
 		//personagem_handler->recebePersonagensColididos();
 
 
@@ -66,7 +66,8 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		draw(screen);
 		system("clear");
 		show(screen);
-		std::cout << p1->getPosL() << " " << p1->getPosC() << std::endl;
+		std::cout << p1->getPosL() << " " << p1->getPosC() << " " << p1->getBombasMax() << std::endl;
+
 	}
     return 0;
 }
