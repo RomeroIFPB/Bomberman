@@ -1,5 +1,7 @@
 #pragma once
+#include <list>
 #include "ASCII_Engine/ObjetoDeJogo.hpp"
+
 class Personagem : public ObjetoDeJogo
 {
     public:

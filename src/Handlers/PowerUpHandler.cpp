@@ -21,9 +21,20 @@ void PowerUpHandler::recebeBlocosQuebrados(std::list<Bloco*> &blocosQuebrados) {
 }
 
 void PowerUpHandler::LimpaConsumidos() {
+
+    for (auto it = powerUpsAtivos.begin(); it != powerUpsAtivos.end(); ) 
+    {
+        if (!(*it)->getActive()) 
+        {
+            it = powerUpsAtivos.erase(it); // já retorna o próximo válido
+        } else 
+        {
+        ++it;
+        }
+    }
     for (auto it = powerUpsConsumidos.begin(); it != powerUpsConsumidos.end(); ) {
-        delete *it; // Libera a memória do PowerUp
-        it = powerUpsConsumidos.erase(it); // Remove o PowerUp da lista
+        delete *it; 
+        it = powerUpsConsumidos.erase(it); 
     }
     powerUpsConsumidos.clear();
 }

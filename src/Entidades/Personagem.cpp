@@ -25,7 +25,8 @@ char Personagem::decisao(char entrada) {
 }
 void Personagem::mover(char entrada) {
    switch (entrada) {
-        case 'w': // Mover para cima
+        case 'w': 
+            // Mover para cima
             moveUp(3);
             break;
         case 's': // Mover para baixo   

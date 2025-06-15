@@ -42,7 +42,7 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 	show(screen);
     
     while(true)
-    {
+    {	
         char tecla = Keyboard::read();
 
 		personagem_handler->tomarDecisoes(tecla);
@@ -57,17 +57,33 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 
 		powerup_handler->recebeBlocosQuebrados(bloco_handler->getQuebrados());
 
-		//powerup_handler->SearchConsumidos(personagem_handler->getPersonagens());
-		//personagem_handler->recebePersonagensColididos();
+		powerup_handler->SearchConsumidos(personagem_handler->getPersonagens());
+		personagem_handler->recebePersonagensColididos(fogo_handler->getPersonagensColididos());
 
 
-        // ESTADO GERAL DO JOGO
+        
 		update();
 		draw(screen);
 		system("clear");
 		show(screen);
-		std::cout << p1->getPosL() << " " << p1->getPosC() << " " << p1->getBombasMax() << std::endl;
 
+		std::cout << p1->getPosL() << " " << p1->getPosC() << " " << p1->getVidas() << std::endl;
+		std::cout << "Blocos: " << std::endl;
+		for(auto &bloco : bloco_handler->getBlocosAtivos()) {
+			std::cout << bloco->getPosL() << " " << bloco->getPosC() << std::endl;
+		}
+		std::cout << "Bombas: " << std::endl;
+		for(auto &bomba : bomba_handler->getAtivas()) {
+			std::cout << bomba->getPosL() << " " << bomba->getPosC() << std::endl;
+		}
+		std::cout << "Fogo: " << std::endl;
+		for(auto &fogo : fogo_handler->getFogosAtivos()) {
+			std::cout << fogo->getPosL() << " " << fogo->getPosC() << std::endl;
+		}
+		std::cout << "PowerUps: " << std::endl;
+		for(auto &powerup : powerup_handler->getPowerUpsAtivos()) {
+			std::cout << powerup->getPosL() << " " << powerup->getPosC() << std::endl;
+		}
 	}
     return 0;
 }

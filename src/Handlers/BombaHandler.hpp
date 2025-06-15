@@ -16,6 +16,7 @@ class BombaHandler : public ObjetoDeJogo
         void diminuiPavios();
         void update() override;
         void draw(SpriteBase &screen, int x = 0, int y = 0) override;
+        std::list<Bomba*>& getAtivas() {return bombasAtivas;};
     private:
         std::list<Bomba*> bombasAtivas; // Lista de bombas ativas
         std::list<Bomba*> bombasExplodidas; // Lista de bombas explodidas

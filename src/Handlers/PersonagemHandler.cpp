@@ -1,6 +1,7 @@
 #include "PersonagemHandler.hpp"
 #include <iostream>
-void PersonagemHandler::tomarDecisoes(char tecla) {
+void PersonagemHandler::tomarDecisoes(char tecla) 
+{
     for (auto &personagem : personagens) {
         if (personagem->getActive()) {
             char resultado = personagem->decisao(tecla);
@@ -17,7 +18,8 @@ void PersonagemHandler::tomarDecisoes(char tecla) {
     }
 }
 
-void PersonagemHandler::adicionarPersonagem(Personagem *personagem) {
+void PersonagemHandler::adicionarPersonagem(Personagem *personagem) 
+{
     if (personagem) {
         personagens.push_back(personagem);
     } else {
@@ -28,13 +30,28 @@ void PersonagemHandler::adicionarPersonagem(Personagem *personagem) {
 void PersonagemHandler::designaBomba(Personagem *p) {
     soltou_bomba.push_back(p);
 }
-void PersonagemHandler::recebePersonagensColididos() {
-    // Implement logic to receive collided characters
+
+void PersonagemHandler::recebePersonagensColididos(std::list<Personagem*> &colididos) 
+{
+    for (auto &personagem : colididos) {
+        for (auto it = personagens.begin(); it != personagens.end(); ++it) {
+            if ((*it)->getName() == personagem->getName()) {
+                (*it)->diminuirVida();
+                if ((*it)->getVidas() <= 0) {
+                    (*it)->desativarObj();
+                }
+            }
+        }
+    }
 }
-void PersonagemHandler::limpaBombardeios() {
+
+void PersonagemHandler::limpaBombardeios() 
+{
     soltou_bomba.clear();
 }
-void PersonagemHandler::update() {
+
+void PersonagemHandler::update() 
+{
     limpaBombardeios();
     for (auto it = personagens.begin() ; it != personagens.end() ; ++it)
     {
@@ -42,7 +59,9 @@ void PersonagemHandler::update() {
             (*it)->update();
     }
 }
-void PersonagemHandler::draw(SpriteBase &screen, int x, int y) {
+
+void PersonagemHandler::draw(SpriteBase &screen, int x, int y) 
+{
     for (auto it = personagens.begin() ; it != personagens.end() ; ++it)
     {
         if ((*it)->getActive())

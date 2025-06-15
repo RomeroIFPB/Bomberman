@@ -1,10 +1,6 @@
 #include "FogoHandler.hpp"
 #include <iostream>
 
-void FogoHandler::getBlocosColididos() 
-{
-    std::cout << "Oi!";
-}
 
 void FogoHandler::checarColisaoPersonagem(std::list<Personagem*> &p)
 {
@@ -36,9 +32,6 @@ void FogoHandler::checarColisaoBloco(std::list<Bloco*> &b)
     }
 }
 
-void FogoHandler::getPersonagensColididos() {
-    // Implement logic to get collided characters
-}
 void FogoHandler::comunicaExplodidas(std::list<Bomba*> &explodidas) 
 {
     for (auto &bomba : explodidas) 
@@ -57,13 +50,6 @@ void FogoHandler::LimpaAcabados() {
     fogos_acabados.clear();
 }
 
-
-void FogoHandler::LimpaPersonagensColididos() {
-    // Implement logic to clear collided characters
-}
-void FogoHandler::LimpaBlocosColididos() {
-    // Implement logic to clear collided blocks
-}
 void FogoHandler::diminuiTempos() {
     for (auto it = fogos_ativos.begin(); it != fogos_ativos.end(); ) {
         (*it)->diminuirTempo();
@@ -75,8 +61,11 @@ void FogoHandler::diminuiTempos() {
         }
     }
 }
-void FogoHandler::update() {
+void FogoHandler::update() 
+{
     LimpaAcabados();
+    blocos_colididos.clear();
+    personagens_colididos.clear();
     for (auto it = fogos_ativos.begin() ; it != fogos_ativos.end() ; ++it)
     {
         if ((*it)->getActive())
@@ -84,7 +73,8 @@ void FogoHandler::update() {
     }
     diminuiTempos();
 }
-void FogoHandler::draw(SpriteBase &screen, int x, int y) {
+void FogoHandler::draw(SpriteBase &screen, int x, int y) 
+{
     for (auto it = fogos_ativos.begin() ; it != fogos_ativos.end() ; ++it)
     {
         if ((*it)->getActive())
@@ -92,7 +82,8 @@ void FogoHandler::draw(SpriteBase &screen, int x, int y) {
     }
 }
 
-void FogoHandler::calcularExplosao(Bomba *bomba) {
+void FogoHandler::calcularExplosao(Bomba *bomba) 
+{
     // Norte
     int norte_atual = bomba->getPosL() - 3;
     Fogo* fogo_norte = new Fogo(norte_atual, bomba->getPosC());

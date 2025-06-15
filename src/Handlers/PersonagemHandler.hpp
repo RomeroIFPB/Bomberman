@@ -18,7 +18,7 @@ public:
     std::list<Personagem*> getSoltas() const {return soltou_bomba;};
     void tomarDecisoes(char tecla);
     void designaBomba(Personagem *p);
-    void recebePersonagensColididos();
+    void recebePersonagensColididos(std::list<Personagem*> &colididos);
     void limpaBombardeios();
     void update() override;
     void draw(SpriteBase &screen, int x, int y) override;
