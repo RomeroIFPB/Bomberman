@@ -45,7 +45,7 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
     {	
         char tecla = Keyboard::read();
 
-		personagem_handler->tomarDecisoes(tecla);
+		personagem_handler->tomarDecisoes(tecla, bloco_handler->getBlocosAtivos(), bomba_handler->getAtivas());
 		bomba_handler->comunicaAtivas(personagem_handler->getSoltas());
 
 
@@ -85,6 +85,9 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 			std::cout << powerup->getPosL() << " " << powerup->getPosC() << std::endl;
 		}
 	}
-    return 0;
+	
+	return 0;
 }
+
+
 

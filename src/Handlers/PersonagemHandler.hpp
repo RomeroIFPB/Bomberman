@@ -1,5 +1,7 @@
 #include "ASCII_Engine/ObjetoDeJogo.hpp"
 #include "../Entidades/Personagem.hpp"
+#include "../Entidades/Bomba.hpp"
+#include "../Entidades/Bloco.hpp"
 #include <list>
 
 class PersonagemHandler : public ObjetoDeJogo
@@ -16,12 +18,13 @@ public:
     void adicionarPersonagem(Personagem *personagem);
 
     std::list<Personagem*> getSoltas() const {return soltou_bomba;};
-    void tomarDecisoes(char tecla);
+    void tomarDecisoes(char tecla, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas);
     void designaBomba(Personagem *p);
     void recebePersonagensColididos(std::list<Personagem*> &colididos);
     void limpaBombardeios();
     void update() override;
     void draw(SpriteBase &screen, int x, int y) override;
+    bool tem_barreira(char tecla, Personagem* &p, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas);
 
 private:
     std::list<Personagem*> personagens;

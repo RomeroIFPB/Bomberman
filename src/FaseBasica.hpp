@@ -11,6 +11,8 @@ class FaseBasica : public Fase
     public:
         FaseBasica(std::string name, const SpriteBase &bkg) : Fase(name,bkg) {}
         virtual ~FaseBasica() {}
+
+        void ConcentrarBarreiras();
         void init() override;
         unsigned run(SpriteBuffer &screen) override;
     private:
@@ -19,6 +21,7 @@ class FaseBasica : public Fase
         FogoHandler* fogo_handler;
         BlocoHandler* bloco_handler;
         PowerUpHandler* powerup_handler;
+        std::list<ObjetoDeJogo*> barreiras;
         Personagem *p1;
 
 

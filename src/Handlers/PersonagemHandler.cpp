@@ -1,6 +1,110 @@
 #include "PersonagemHandler.hpp"
 #include <iostream>
-void PersonagemHandler::tomarDecisoes(char tecla) 
+
+bool PersonagemHandler::tem_barreira(char tecla, Personagem* &p, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas) 
+{
+    bool encontrou = false;
+    switch (tecla) {
+        case 'w':
+            if(p->getPosL() - 3 == 2)
+            {
+                encontrou = true;
+            }
+            for(auto &bloco : blocos)
+            {
+                if(p->getPosL() - 3 == bloco->getPosL() && p->getPosC() == bloco->getPosC())
+                {
+                    encontrou = true;
+                    break;
+                }
+            }
+            for(auto &bomba : bombas)
+            {
+                if(p->getPosL() - 3 == bomba->getPosL() && p->getPosC() == bomba->getPosC())
+                {
+                    encontrou = true;
+                    break;
+                }
+            }
+            break;
+        case 's':
+            if(p->getPosL() + 3 == 38)
+            {
+                encontrou = true;
+            }
+            for(auto &bloco : blocos)
+            {
+                if(p->getPosL() + 3 == bloco->getPosL() && p->getPosC() == bloco->getPosC())
+                {
+                    encontrou = true;
+                    break;
+                }
+            }
+            for(auto &bomba : bombas)
+            {
+                if(p->getPosL() + 3 == bomba->getPosL() && p->getPosC() == bomba->getPosC())
+                {
+                    encontrou = true;
+                    break;
+                }
+            }
+            break;
+        case 'a':
+            if(p->getPosC() - 7 == 0)
+            {
+                encontrou = true;
+            } 
+            for(auto &bloco : blocos)
+            {
+                if(p->getPosL() == bloco->getPosL() && p->getPosC() - 7 == bloco->getPosC())
+                {
+                    encontrou = true;
+                    break;
+                }
+            }
+            for(auto &bomba : bombas)
+            {
+                if(p->getPosL() == bomba->getPosL() && p->getPosC() - 7 == bomba->getPosC())
+                {
+                    encontrou = true;
+                    break;
+                }
+            }
+            break;
+        case 'd':
+            if(p->getPosC() + 7 == 140)
+            {
+                encontrou = true;
+            } 
+            for(auto &bloco : blocos)
+            {
+                if(p->getPosL() == bloco->getPosL() && p->getPosC() + 7 == bloco->getPosC())
+                {
+                    encontrou = true;
+                    break;
+                }
+            }
+            for(auto &bomba : bombas)
+            {
+                if(p->getPosL() == bomba->getPosL() && p->getPosC() + 7 == bomba->getPosC())
+                {
+                    encontrou = true;
+                    break;
+                }
+            }
+            break;
+    }
+    if(encontrou == true)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void PersonagemHandler::tomarDecisoes(char tecla, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas) 
 {
     for (auto &personagem : personagens) {
         if (personagem->getActive()) {
@@ -9,7 +113,7 @@ void PersonagemHandler::tomarDecisoes(char tecla)
                 designaBomba(personagem);
                 personagem->diminuirBombas();
             }
-            else if (resultado == 'm')
+            else if (resultado == 'm' && !tem_barreira(tecla, personagem, blocos, bombas))
             {
                 personagem->mover(tecla);
             }
