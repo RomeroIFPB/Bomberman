@@ -61,7 +61,7 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		personagem_handler->recebePersonagensColididos(fogo_handler->getPersonagensColididos());
 
 
-        
+        atualizarMatriz();
 		update();
 		draw(screen);
 		system("clear");
@@ -84,10 +84,45 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		for(auto &powerup : powerup_handler->getPowerUpsAtivos()) {
 			std::cout << powerup->getPosL() << " " << powerup->getPosC() << std::endl;
 		}
+		for (size_t i = 0; i < matriz_entidades.size(); ++i) 
+		{
+        	for (size_t j = 0; j < matriz_entidades[i].size(); ++j) 
+			{
+            	std::cout << matriz_entidades[i][j] << " ";
+        	}
+        	std::cout << std::endl;
+    	}
 	}
 	
 	return 0;
 }
 
+void FaseBasica::atualizarMatriz()
+{
+	matriz_entidades = std::vector<std::vector<int>>(21, std::vector<int>(19, 0));
+
+
+	auto setNaMatriz = [&](int l, int c, int valor){
+		int i = (l / 7) - 1;
+		int j = (c / 3) - 1;
+		if (i >= 0 && i < 21 && j >= 0 && j < 19)
+			matriz_entidades[i][j] = valor;
+		else
+			std::cerr << "Tentativa de acesso fora da matriz: (" << i << ", " << j << ")\n";
+	};
+
+	for (auto &bloco : bloco_handler->getBlocosAtivos())
+		setNaMatriz(bloco->getPosL(), bloco->getPosC(), 1);
+
+	for (auto &bomba : bomba_handler->getAtivas())
+		setNaMatriz(bomba->getPosL(), bomba->getPosC(), 2);
+
+	for (auto &fogo : fogo_handler->getFogosAtivos())
+		setNaMatriz(fogo->getPosL(), fogo->getPosC(), 3);
+
+	for (auto &powerup : powerup_handler->getPowerUpsAtivos())
+		setNaMatriz(powerup->getPosL(), powerup->getPosC(), 4);
+
+}	
 
 

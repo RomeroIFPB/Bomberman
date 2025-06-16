@@ -1,10 +1,12 @@
+#include <list>
+#include <vector>
 #include "../ASCII_Engine/Fase.hpp"
 #include "Handlers/PersonagemHandler.hpp"
 #include "Handlers/BombaHandler.hpp"
 #include "Handlers/FogoHandler.hpp"
 #include "Handlers/BlocoHandler.hpp"
 #include "Handlers/PowerUpHandler.hpp"
-#include <list>
+
 
 class FaseBasica : public Fase
 {
@@ -12,7 +14,7 @@ class FaseBasica : public Fase
         FaseBasica(std::string name, const SpriteBase &bkg) : Fase(name,bkg) {}
         virtual ~FaseBasica() {}
 
-        void ConcentrarBarreiras();
+        void atualizarMatriz();
         void init() override;
         unsigned run(SpriteBuffer &screen) override;
     private:
@@ -21,7 +23,7 @@ class FaseBasica : public Fase
         FogoHandler* fogo_handler;
         BlocoHandler* bloco_handler;
         PowerUpHandler* powerup_handler;
-        std::list<ObjetoDeJogo*> barreiras;
+        std::vector<std::vector<int>> matriz_entidades;
         Personagem *p1;
 
 
