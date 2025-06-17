@@ -25,6 +25,4 @@ class FaseBasica : public Fase
         PowerUpHandler* powerup_handler;
         std::vector<std::vector<int>> matriz_entidades;
         Personagem *p1;
-
-
 };

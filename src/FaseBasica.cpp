@@ -25,11 +25,28 @@ void FaseBasica::init()
 
 	// Adiciona os personagens ao handler
 	personagem_handler->adicionarPersonagem(p1);
-	personagem_handler->adicionarPersonagem(p2);
-
-	p2->desativarObj();
-
-	bloco_handler->carregaMapa();
+	std::vector<std::vector<int>> matriz_inicial = {
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    };
+	bloco_handler->carregaMapa(matriz_inicial);
 
 }
 
@@ -43,6 +60,7 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
     
     while(true)
     {	
+
         char tecla = Keyboard::read();
 
 		personagem_handler->tomarDecisoes(tecla, bloco_handler->getBlocosAtivos(), bomba_handler->getAtivas());
@@ -61,16 +79,17 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		personagem_handler->recebePersonagensColididos(fogo_handler->getPersonagensColididos());
 
 
-        atualizarMatriz();
+        
 		update();
 		draw(screen);
 		system("clear");
 		show(screen);
+		atualizarMatriz();
 
 		std::cout << p1->getPosL() << " " << p1->getPosC() << " " << p1->getVidas() << std::endl;
 		std::cout << "Blocos: " << std::endl;
 		for(auto &bloco : bloco_handler->getBlocosAtivos()) {
-			std::cout << bloco->getPosL() << " " << bloco->getPosC() << std::endl;
+			std::cout << (bloco->getPosL() - 5)/3 << " " << bloco->getPosC()/7 << std::endl;
 		}
 		std::cout << "Bombas: " << std::endl;
 		for(auto &bomba : bomba_handler->getAtivas()) {
@@ -84,14 +103,6 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		for(auto &powerup : powerup_handler->getPowerUpsAtivos()) {
 			std::cout << powerup->getPosL() << " " << powerup->getPosC() << std::endl;
 		}
-		for (size_t i = 0; i < matriz_entidades.size(); ++i) 
-		{
-        	for (size_t j = 0; j < matriz_entidades[i].size(); ++j) 
-			{
-            	std::cout << matriz_entidades[i][j] << " ";
-        	}
-        	std::cout << std::endl;
-    	}
 	}
 	
 	return 0;
@@ -103,14 +114,18 @@ void FaseBasica::atualizarMatriz()
 
 
 	auto setNaMatriz = [&](int l, int c, int valor){
-		int i = (l / 7) - 1;
-		int j = (c / 3) - 1;
+		int i = (l / 3 - 1);
+		int j = (c / 7 - 1);
+		
 		if (i >= 0 && i < 21 && j >= 0 && j < 19)
+		{
+			std::cout << "Setando valor " << valor << " na matriz (" << i << ", " << j << ")\n";
 			matriz_entidades[i][j] = valor;
+		}
 		else
 			std::cerr << "Tentativa de acesso fora da matriz: (" << i << ", " << j << ")\n";
 	};
-
+	
 	for (auto &bloco : bloco_handler->getBlocosAtivos())
 		setNaMatriz(bloco->getPosL(), bloco->getPosC(), 1);
 
@@ -123,6 +138,8 @@ void FaseBasica::atualizarMatriz()
 	for (auto &powerup : powerup_handler->getPowerUpsAtivos())
 		setNaMatriz(powerup->getPosL(), powerup->getPosC(), 4);
 
+	for (auto &personagem : personagem_handler->getPersonagens())
+		setNaMatriz(personagem->getPosL(), personagem->getPosC(), 5);
 }	
 
 

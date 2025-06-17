@@ -9,7 +9,7 @@ class BlocoHandler : public ObjetoDeJogo
             : ObjetoDeJogo(nome, sprite, x, y) {}
 
         std::list<Bloco*>& getBlocosAtivos() { return blocosAtivos; }
-        void carregaMapa();
+        void carregaMapa(std::vector<std::vector<int>> &matriz);
         std::list<Bloco*>& getQuebrados() {return blocosQuebrados;}
         void recebeBlocosColididos(std::list<Bloco*> &blocosColididos);
 

@@ -1,9 +1,17 @@
 #include "BlocoHandler.hpp"
 #include <iostream>
 
-void BlocoHandler::carregaMapa() {
-    Bloco* bloco = new Bloco(20, 70);
-    blocosAtivos.push_back(bloco);
+void BlocoHandler::carregaMapa(std::vector<std::vector<int>> &matriz) 
+{
+    for(int i = 0; i < matriz.size(); ++i) {
+        for(int j = 0; j < matriz[i].size(); ++j) {
+            if (matriz[i][j] == 1) { // Bloco ativo
+                Bloco *bloco = new Bloco(i * 3 + 5, 7 + j * 7);
+                blocosAtivos.push_back(bloco);
+            }
+        }
+    }
+
 }
 
 void BlocoHandler::recebeBlocosColididos(std::list<Bloco*> &blocosColididos) 
