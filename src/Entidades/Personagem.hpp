@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include <vector>
 #include "ASCII_Engine/ObjetoDeJogo.hpp"
 
 class Personagem : public ObjetoDeJogo
@@ -10,7 +11,7 @@ class Personagem : public ObjetoDeJogo
 
         virtual ~Personagem() {}
 
-        char decisao(char entrada);
+        virtual char decisao(char entrada, std::vector<std::vector<int>> &matriz) = 0;
         void mover(char entrada);
         void diminuirVida();
         void diminuirBombas();

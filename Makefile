@@ -29,7 +29,7 @@ SRCDIRS = ASCII_Engine src
 # A função 'wildcard' expande padrões de nome de arquivo.
 # A função 'patsubst' substitui partes de strings.
 # A função 'foreach' itera sobre uma lista.
-SOURCES = $(foreach dir,$(SRCDIRS),$(wildcard $(dir)/*.cpp $(dir)/**/*.cpp))
+SOURCES := $(shell find $(SRCDIRS) -name '*.cpp')
 
 # Deriva os nomes dos arquivos objeto (.o) a partir dos arquivos fonte (.cpp)
 # Os arquivos .o serão armazenados no diretório OBJDIR, mantendo a estrutura de subdiretórios.

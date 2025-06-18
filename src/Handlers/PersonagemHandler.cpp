@@ -104,20 +104,39 @@ bool PersonagemHandler::tem_barreira(char tecla, Personagem* &p, std::list<Bloco
     }
 }
 
-void PersonagemHandler::tomarDecisoes(char tecla, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas) 
+void PersonagemHandler::tomarDecisoes(char tecla, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas,std::vector<std::vector<int>> &matriz) 
 {
     for (auto &personagem : personagens) {
         if (personagem->getActive()) {
-            char resultado = personagem->decisao(tecla);
-            if (resultado == 'b' && personagem->getBombasDisponiveis() > 0) {
-                designaBomba(personagem);
-                personagem->diminuirBombas();
-            }
-            else if (resultado == 'm' && !tem_barreira(tecla, personagem, blocos, bombas))
+            char resultado = personagem->decisao(tecla,matriz);
+            switch (resultado)
             {
-                personagem->mover(tecla);
+                case 'w':
+                    if (!tem_barreira('w', personagem, blocos, bombas)) {
+                        personagem->mover('w');
+                    }
+                    break;
+                case 's':
+                    if (!tem_barreira('s', personagem, blocos, bombas)) {
+                        personagem->mover('s');
+                    }
+                    break;
+                case 'a':
+                    if (!tem_barreira('a', personagem, blocos, bombas)) {
+                        personagem->mover('a');
+                    }
+                    break;
+                case 'd':
+                    if (!tem_barreira('d', personagem, blocos, bombas)) {
+                        personagem->mover('d');
+                    }
+                    break;
+                case 'l':
+                    if (personagem->getBombasDisponiveis() > 0) {
+                        personagem->diminuirBombas();
+                        designaBomba(personagem);
+                    }
             }
-
         } 
     }
 }

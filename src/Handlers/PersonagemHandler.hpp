@@ -18,7 +18,7 @@ public:
     void adicionarPersonagem(Personagem *personagem);
 
     std::list<Personagem*> getSoltas() const {return soltou_bomba;};
-    void tomarDecisoes(char tecla, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas);
+    void tomarDecisoes(char tecla, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas, std::vector<std::vector<int>> &matriz);
     void designaBomba(Personagem *p);
     void recebePersonagensColididos(std::list<Personagem*> &colididos);
     void limpaBombardeios();

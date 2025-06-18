@@ -1,6 +1,8 @@
 #include <list>
 #include <vector>
 #include "../ASCII_Engine/Fase.hpp"
+#include "Entidades/Bomberman.hpp"
+#include "Entidades/Acefalo.hpp"
 #include "Handlers/PersonagemHandler.hpp"
 #include "Handlers/BombaHandler.hpp"
 #include "Handlers/FogoHandler.hpp"
@@ -24,5 +26,5 @@ class FaseBasica : public Fase
         BlocoHandler* bloco_handler;
         PowerUpHandler* powerup_handler;
         std::vector<std::vector<int>> matriz_entidades;
-        Personagem *p1;
+        Bomberman *p1;
 };

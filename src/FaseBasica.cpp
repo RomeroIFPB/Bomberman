@@ -20,31 +20,22 @@ void FaseBasica::init()
 	// Inicialização de entidades
 
 	// Personagens:
-	p1 = new Personagem("Player1", Sprite("rsc/bomberman.img"), 5, 7, 3, 1, 1);
-	Personagem *p2 = new Personagem("Player2", Sprite("rsc/bomberman.img"), 0, 1, 3, 1, 1);
-
-	// Adiciona os personagens ao handler
+	p1 = new Bomberman("Player1", Sprite("rsc/bomberman.img"), 20, 70, 3, 1, 1);
 	personagem_handler->adicionarPersonagem(p1);
+	Acefalo* acefalo = new Acefalo("Acefalo", Sprite("rsc/bomberman.img"), 5, 133, 3, 1, 1);
+	personagem_handler->adicionarPersonagem(acefalo);
+	// Adiciona os personagens ao handler
 	std::vector<std::vector<int>> matriz_inicial = {
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+        {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}
     };
 	bloco_handler->carregaMapa(matriz_inicial);
 
@@ -63,7 +54,7 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 
         char tecla = Keyboard::read();
 
-		personagem_handler->tomarDecisoes(tecla, bloco_handler->getBlocosAtivos(), bomba_handler->getAtivas());
+		personagem_handler->tomarDecisoes(tecla, bloco_handler->getBlocosAtivos(), bomba_handler->getAtivas(),matriz_entidades);
 		bomba_handler->comunicaAtivas(personagem_handler->getSoltas());
 
 
@@ -85,8 +76,9 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		system("clear");
 		show(screen);
 		atualizarMatriz();
-
+		
 		std::cout << p1->getPosL() << " " << p1->getPosC() << " " << p1->getVidas() << std::endl;
+		/*
 		std::cout << "Blocos: " << std::endl;
 		for(auto &bloco : bloco_handler->getBlocosAtivos()) {
 			std::cout << (bloco->getPosL() - 5)/3 << " " << bloco->getPosC()/7 << std::endl;
@@ -103,6 +95,14 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		for(auto &powerup : powerup_handler->getPowerUpsAtivos()) {
 			std::cout << powerup->getPosL() << " " << powerup->getPosC() << std::endl;
 		}
+		*/
+		std::cout << matriz_entidades.size() << "x" << matriz_entidades[0].size() << std::endl;
+		for (size_t i = 0; i < matriz_entidades.size(); ++i) {
+        for (size_t j = 0; j < matriz_entidades[i].size(); ++j) {
+            std::cout << matriz_entidades[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
 	}
 	
 	return 0;
@@ -110,20 +110,23 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 
 void FaseBasica::atualizarMatriz()
 {
-	matriz_entidades = std::vector<std::vector<int>>(21, std::vector<int>(19, 0));
+	matriz_entidades = std::vector<std::vector<int>>(11, std::vector<int>(19, 0));
 
 
 	auto setNaMatriz = [&](int l, int c, int valor){
-		int i = (l / 3 - 1);
-		int j = (c / 7 - 1);
-		
-		if (i >= 0 && i < 21 && j >= 0 && j < 19)
+		int i = (l - 5) / 3;
+		int j = (c - 7) / 7;
+		if (i >= 0 && i < 11 && j >= 0 && j < 19)
 		{
-			std::cout << "Setando valor " << valor << " na matriz (" << i << ", " << j << ")\n";
 			matriz_entidades[i][j] = valor;
 		}
 		else
-			std::cerr << "Tentativa de acesso fora da matriz: (" << i << ", " << j << ")\n";
+		{
+			std::cerr << "Tentativa de acesso fora da matriz: (" << l << ", " << c << ")\n";
+			std::cout << "i: " << i << ", j: " << j << std::endl;
+		}
+			
+			
 	};
 	
 	for (auto &bloco : bloco_handler->getBlocosAtivos())
@@ -140,6 +143,7 @@ void FaseBasica::atualizarMatriz()
 
 	for (auto &personagem : personagem_handler->getPersonagens())
 		setNaMatriz(personagem->getPosL(), personagem->getPosC(), 5);
+		
 }	
 
 
