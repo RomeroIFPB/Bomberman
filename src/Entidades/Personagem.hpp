@@ -13,6 +13,7 @@ class Personagem : public ObjetoDeJogo
 
         virtual char decisao(char entrada, std::vector<std::vector<int>> &matriz) = 0;
         void mover(char entrada);
+        void aumentarVida();
         void diminuirVida();
         void diminuirBombas();
         void restituirBomba(){bombasDisponiveis++;};

@@ -1,6 +1,9 @@
 #include "PowerUpHandler.hpp"
 #include <iostream>
 #include <list>
+#include <cstdlib>   
+#include <string>
+
 
 void PowerUpHandler::SearchConsumidos(std::list<Personagem*> &personagens) {
     for (auto &powerup : powerUpsAtivos)
@@ -9,6 +12,15 @@ void PowerUpHandler::SearchConsumidos(std::list<Personagem*> &personagens) {
             if (powerup->getActive() && personagem->getPosL() == powerup->getPosL() && personagem->getPosC() == powerup->getPosC()) {
                 powerUpsConsumidos.push_back(powerup);
                 powerup->desativarObj();
+                // Fazer a lógica para saber como tratar cada tipo de powerup
+                if (powerup->getTipo() == "vida") {
+                    personagem->aumentarVida();
+                } else if (powerup->getTipo() == "bombaforte") {
+                    
+                } else if (powerup->getTipo() == "bombaextra")
+                {
+                    personagem->aumentarBomba();
+                }
                 personagem->aumentarBomba();
             }
         }
@@ -16,7 +28,15 @@ void PowerUpHandler::SearchConsumidos(std::list<Personagem*> &personagens) {
 }
 void PowerUpHandler::recebeBlocosQuebrados(std::list<Bloco*> &blocosQuebrados) {
     for (auto &bloco : blocosQuebrados) {
-        powerUpsAtivos.push_back(new PowerUp(bloco->getPosL(), bloco->getPosC()));
+            int numero = rand() % 100;
+            if (numero < 50) { 
+            } else if (numero < 75) {
+                powerUpsAtivos.push_back(new PowerUp(Sprite("rsc/powerup_bombaextra.img"),bloco->getPosL(), bloco->getPosC(), "bombaextra"));   // 25% de chance
+            } else if (numero < 90) {
+                powerUpsAtivos.push_back(new PowerUp(Sprite("rsc/powerup_vida.img"),bloco->getPosL(), bloco->getPosC(), "vida"));         // 15% de chance
+            } else {
+                powerUpsAtivos.push_back(new PowerUp(Sprite("rsc/powerup_bombaforte.img"),bloco->getPosL(), bloco->getPosC(), "bombaforte"));     // 10% de chance
+            }
     }
 }
 

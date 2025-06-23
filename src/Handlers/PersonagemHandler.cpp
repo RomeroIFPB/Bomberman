@@ -160,9 +160,6 @@ void PersonagemHandler::recebePersonagensColididos(std::list<Personagem*> &colid
         for (auto it = personagens.begin(); it != personagens.end(); ++it) {
             if ((*it)->getName() == personagem->getName()) {
                 (*it)->diminuirVida();
-                if ((*it)->getVidas() <= 0) {
-                    (*it)->desativarObj();
-                }
             }
         }
     }
@@ -176,6 +173,11 @@ void PersonagemHandler::limpaBombardeios()
 void PersonagemHandler::update() 
 {
     limpaBombardeios();
+    for (auto it = personagens.begin() ; it != personagens.end() ; ++it)
+    {
+        if ((*it)->getVidas() <= 0)
+            (*it)->desativarObj();
+    }
     for (auto it = personagens.begin() ; it != personagens.end() ; ++it)
     {
         if ((*it)->getActive())

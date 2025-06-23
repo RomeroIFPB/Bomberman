@@ -30,6 +30,10 @@ void Personagem::diminuirVida() {
     }
 }
 
+void Personagem::aumentarVida() {
+    vidas++;
+}
+
 void Personagem::diminuirBombas() {
     bombasDisponiveis--;
 }

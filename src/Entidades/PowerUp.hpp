@@ -5,9 +5,11 @@ class PowerUp : public ObjetoDeJogo
 {
 
 public:
-    PowerUp(int x, int y)
-        : ObjetoDeJogo("PowerUp", Sprite("rsc/bomba_powerup.img"), x, y), tipo("bomba_extra") {}
+    PowerUp(const Sprite &s, int x, int y, std::string tipo)
+        : ObjetoDeJogo("PowerUp", s, x, y), tipo(tipo) {}
+    ~PowerUp() {}
 
+    std::string getTipo() const { return tipo; }
 private:
     std::string tipo;
 };

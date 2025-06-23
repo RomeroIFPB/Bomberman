@@ -3,7 +3,7 @@
 
 void FaseBasica::init() 
 {
-    Keyboard::setMode(Keyboard::BLOCKING);
+    Keyboard::setMode(Keyboard::NONBLOCKING);
 
 	// Inicialização dos Handlers
 	personagem_handler = new PersonagemHandler("Personagem", Sprite("rsc/HandlerSprite.img"),0,0);
@@ -22,7 +22,7 @@ void FaseBasica::init()
 	// Personagens:
 	p1 = new Bomberman("Player1", Sprite("rsc/bomberman.img"), 20, 70, 3, 1, 1);
 	personagem_handler->adicionarPersonagem(p1);
-	Acefalo* acefalo = new Acefalo("Acefalo", Sprite("rsc/bomberman.img"), 5, 133, 3, 1, 1);
+	Acefalo* acefalo = new Acefalo("Acefalo", Sprite("rsc/bomberman.img"), 5, 133, 1, 1, 1);
 	personagem_handler->adicionarPersonagem(acefalo);
 	// Adiciona os personagens ao handler
 	std::vector<std::vector<int>> matriz_inicial = {
@@ -53,7 +53,11 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
     {	
 
         char tecla = Keyboard::read();
-
+		if (tecla == 'q' || tecla == 'Q') 
+		{
+			return Fase::END_GAME;
+		}
+		
 		personagem_handler->tomarDecisoes(tecla, bloco_handler->getBlocosAtivos(), bomba_handler->getAtivas(),matriz_entidades);
 		bomba_handler->comunicaAtivas(personagem_handler->getSoltas());
 
@@ -69,15 +73,18 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		powerup_handler->SearchConsumidos(personagem_handler->getPersonagens());
 		personagem_handler->recebePersonagensColididos(fogo_handler->getPersonagensColididos());
 
+		if(p1->getVidas() <= 0) {
+			std::cout << "GAME OVER" << std::endl;
+			return Fase::GAME_OVER;
+		}
 
-        
 		update();
 		draw(screen);
 		system("clear");
 		show(screen);
+		usleep(500000);
 		atualizarMatriz();
 		
-		std::cout << p1->getPosL() << " " << p1->getPosC() << " " << p1->getVidas() << std::endl;
 		/*
 		std::cout << "Blocos: " << std::endl;
 		for(auto &bloco : bloco_handler->getBlocosAtivos()) {
@@ -96,14 +103,8 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 			std::cout << powerup->getPosL() << " " << powerup->getPosC() << std::endl;
 		}
 		*/
-		std::cout << matriz_entidades.size() << "x" << matriz_entidades[0].size() << std::endl;
-		for (size_t i = 0; i < matriz_entidades.size(); ++i) {
-        for (size_t j = 0; j < matriz_entidades[i].size(); ++j) {
-            std::cout << matriz_entidades[i][j] << " ";
-        }
-        std::cout << "\n";
     }
-	}
+	
 	
 	return 0;
 }

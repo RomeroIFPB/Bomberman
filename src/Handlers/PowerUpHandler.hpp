@@ -1,5 +1,6 @@
 #include <list>
 #include "ASCII_Engine/ObjetoDeJogo.hpp"
+#include "ASCII_Engine/Sprite.hpp"
 #include "../Entidades/Personagem.hpp"
 #include "../Entidades/PowerUp.hpp"
 #include "../Entidades/Bloco.hpp"
