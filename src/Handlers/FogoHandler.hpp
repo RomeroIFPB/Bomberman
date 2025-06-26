@@ -13,13 +13,13 @@ class FogoHandler : public ObjetoDeJogo
         std::list<Fogo*>& getFogosAtivos() { return fogos_ativos; }
         std::list<Bloco*>& getBlocosColididos() { return blocos_colididos; }
         std::list<Personagem*>& getPersonagensColididos() { return personagens_colididos; }
-        void comunicaExplodidas(std::list<Bomba*> &explodidas);
+        void comunicaExplodidas(std::list<Bomba*> &explodidas,std::list<Bloco*> &blocos, std::list<Personagem*> &personagens);
         void checarColisaoBloco(std::list<Bloco*> &b);
         void checarColisaoPersonagem(std::list<Personagem*> &p);
         void searchAcabados();
         void LimpaAcabados();
         void diminuiTempos();
-        void calcularExplosao(Bomba *bomba);
+        void calcularExplosao(Bomba *bomba, std::list<Bloco*> &blocos, std::list<Personagem*> &personagens);
         void update();
         void draw(SpriteBase &screen, int x, int y);
     private:

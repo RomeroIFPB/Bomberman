@@ -32,11 +32,11 @@ void FogoHandler::checarColisaoBloco(std::list<Bloco*> &b)
     }
 }
 
-void FogoHandler::comunicaExplodidas(std::list<Bomba*> &explodidas) 
+void FogoHandler::comunicaExplodidas(std::list<Bomba*> &explodidas, std::list<Bloco*> &blocos, std::list<Personagem*> &personagens) 
 {
     for (auto &bomba : explodidas) 
     {
-        calcularExplosao(bomba);
+        calcularExplosao(bomba,blocos,personagens);
     }
 
 }
@@ -82,22 +82,176 @@ void FogoHandler::draw(SpriteBase &screen, int x, int y)
     }
 }
 
-void FogoHandler::calcularExplosao(Bomba *bomba) 
+void FogoHandler::calcularExplosao(Bomba *bomba,std::list<Bloco*> &blocos, std::list<Personagem*> &personagens) 
 {
+    if(bomba->getBuff() == false)
+    {
     // Norte
-    int norte_atual = bomba->getPosL() - 3;
-    Fogo* fogo_norte = new Fogo(norte_atual, bomba->getPosC());
-    fogos_ativos.push_back(fogo_norte);
+        int norte_atual = bomba->getPosL() - 3;
+        if(norte_atual > 5)
+        {
+            Fogo* fogo_norte = new Fogo(norte_atual, bomba->getPosC());
+            fogos_ativos.push_back(fogo_norte);
+        }
+
+    // Sul
+        int sul_atual = bomba->getPosL() + 3;
+        if(sul_atual < 35)
+        {
+            Fogo* fogo_sul = new Fogo(sul_atual, bomba->getPosC());
+            fogos_ativos.push_back(fogo_sul);
+        }
+
+    // Leste
+        int leste_atual = bomba->getPosC() + 7;
+        if(leste_atual < 133)
+        {
+            Fogo* fogo_leste = new Fogo(bomba->getPosL(), leste_atual);
+            fogos_ativos.push_back(fogo_leste);  
+        }
+   
+    // Oeste
+        int oeste_atual = bomba->getPosC() - 7;
+        if(oeste_atual > 7)
+        {
+            Fogo* fogo_oeste = new Fogo(bomba->getPosL(), oeste_atual);
+            fogos_ativos.push_back(fogo_oeste);
+        }
+
+    }
+    else
+    {
+    // Norte
+        int norte_atual = bomba->getPosL() + 3;
+        bool colisaonorte = false;
+        while(true)
+        {
+            if (norte_atual < 5) break;
+            if (colisaonorte == true) break;
+            for (auto &bloco : blocos) 
+            {
+                if (norte_atual == bloco->getPosL() && bomba->getPosC() == bloco->getPosC()) 
+                {
+                    Fogo* fogo_norte = new Fogo(norte_atual, bomba->getPosC());
+                    fogos_ativos.push_back(fogo_norte);
+                    colisaonorte = true;
+                }
+            }
+            for (auto &personagem : personagens) 
+            {
+                if (norte_atual == personagem->getPosL() && bomba->getPosC() == personagem->getPosC()) 
+                {
+                    Fogo* fogo_norte = new Fogo(norte_atual, bomba->getPosC());
+                    fogos_ativos.push_back(fogo_norte);
+                    colisaonorte = true;
+                }
+            }
+            if (colisaonorte == false)
+            {
+                Fogo* fogo_norte = new Fogo(norte_atual, bomba->getPosC());
+                fogos_ativos.push_back(fogo_norte);
+            }
+            norte_atual -= 3;
+        }
     // Sul
     int sul_atual = bomba->getPosL() + 3;
-    Fogo* fogo_sul = new Fogo(sul_atual, bomba->getPosC());
-    fogos_ativos.push_back(fogo_sul);
-    // Leste
-    int leste_atual = bomba->getPosC() + 7;
-    Fogo* fogo_leste = new Fogo(bomba->getPosL(), leste_atual);
-    fogos_ativos.push_back(fogo_leste);     
+    bool colisaosul = false;
+    while(true)
+    {
+        if (sul_atual > 35) break;
+        if (colisaosul == true) break;
+        for (auto &bloco : blocos) 
+        {
+            if (sul_atual == bloco->getPosL() && bomba->getPosC() == bloco->getPosC()) 
+            {
+                Fogo* fogo_sul = new Fogo(sul_atual, bomba->getPosC());
+                fogos_ativos.push_back(fogo_sul);
+                colisaosul = true;
+            }
+        }
+        for (auto &personagem : personagens) 
+        {
+            if (sul_atual == personagem->getPosL() && bomba->getPosC() == personagem->getPosC()) 
+            {
+                Fogo* fogo_sul = new Fogo(sul_atual, bomba->getPosC());
+                fogos_ativos.push_back(fogo_sul);
+                colisaosul = true;
+            }
+        }
+        if (colisaosul == false)
+        {
+            Fogo* fogo_sul = new Fogo(sul_atual, bomba->getPosC());
+            fogos_ativos.push_back(fogo_sul);
+        }
+        sul_atual += 3;
+    }
+        
     // Oeste
-    int oeste_atual = bomba->getPosC() - 7;
-    Fogo* fogo_oeste = new Fogo(bomba->getPosL(), oeste_atual);
-    fogos_ativos.push_back(fogo_oeste);
+    int oeste_atual = bomba->getPosC() - 7; 
+    bool colisaooeste = false;
+    while(true)
+    {
+        if (oeste_atual < 7) break; 
+        if (colisaooeste == true) break;
+        for (auto &bloco : blocos) 
+        {
+            if (bomba->getPosL() == bloco->getPosL() && oeste_atual == bloco->getPosC()) 
+            {
+                Fogo* fogo_oeste = new Fogo(bomba->getPosL(), oeste_atual);
+                fogos_ativos.push_back(fogo_oeste);
+                colisaooeste = true;
+            }
+        }
+        for (auto &personagem : personagens) 
+        {
+            if (bomba->getPosL() == personagem->getPosL() && oeste_atual == personagem->getPosC()) 
+            {
+                Fogo* fogo_oeste = new Fogo(bomba->getPosL(), oeste_atual);
+                fogos_ativos.push_back(fogo_oeste);
+                colisaooeste = true;
+            }
+        }
+        if (colisaooeste == false)
+        {
+            Fogo* fogo_oeste = new Fogo(bomba->getPosL(), oeste_atual);
+            fogos_ativos.push_back(fogo_oeste);
+        }
+        oeste_atual -= 7; 
+    }
+
+    // Leste
+    int leste_atual = bomba->getPosC() + 7; 
+    bool colisaoleste = false;
+    while(true)
+    {
+        if (leste_atual > 133) break; 
+        if (colisaoleste == true) break;
+        for (auto &bloco : blocos) 
+        {
+            if (bomba->getPosL() == bloco->getPosL() && leste_atual == bloco->getPosC()) 
+            {
+                Fogo* fogo_leste = new Fogo(bomba->getPosL(), leste_atual);
+                fogos_ativos.push_back(fogo_leste);
+                colisaoleste = true;
+            }
+        }
+        for (auto &personagem : personagens) 
+        {
+            if (bomba->getPosL() == personagem->getPosL() && leste_atual == personagem->getPosC()) 
+            {
+                Fogo* fogo_leste = new Fogo(bomba->getPosL(), leste_atual);
+                fogos_ativos.push_back(fogo_leste);
+                colisaoleste = true;
+            }
+        }
+        if (colisaoleste == false)
+        {
+            Fogo* fogo_leste = new Fogo(bomba->getPosL(), leste_atual);
+            fogos_ativos.push_back(fogo_leste);
+        }
+        leste_atual += 7; 
+    }
+
+
+    }
 }

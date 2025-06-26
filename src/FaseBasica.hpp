@@ -27,4 +27,12 @@ class FaseBasica : public Fase
         PowerUpHandler* powerup_handler;
         std::vector<std::vector<int>> matriz_entidades;
         Bomberman *p1;
+
+        TextSprite* lifebomberman;
+        TextSprite* bombasbomberman;
+        TextSprite* buffbomberman;
+
+        TextSprite* lifeinimigo;
+        TextSprite* bombasinimigo;
+        TextSprite* buffinimigo;
 };

@@ -19,6 +19,7 @@ namespace COR
 	const char *const CINZA_ESCURA 		= "\e[38;2;84;84;84m";
 	const char *const CIANO		 		= "\e[38;2;0;255;255m";
 	const char *const MAGENTA	 		= "\e[38;2;255;0;255m";
+	const char *const LARANJA   		= "\e[38;2;255;165;0m";
 	
 	
 	//defina mais cores aqui...

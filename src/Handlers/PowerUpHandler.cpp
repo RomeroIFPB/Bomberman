@@ -13,15 +13,17 @@ void PowerUpHandler::SearchConsumidos(std::list<Personagem*> &personagens) {
                 powerUpsConsumidos.push_back(powerup);
                 powerup->desativarObj();
                 // Fazer a lógica para saber como tratar cada tipo de powerup
-                if (powerup->getTipo() == "vida") {
+                if (powerup->getTipo() == "vida") 
+                {
                     personagem->aumentarVida();
-                } else if (powerup->getTipo() == "bombaforte") {
                     
+                } else if (powerup->getTipo() == "bombaforte") 
+                {
+                    personagem->darBuff();
                 } else if (powerup->getTipo() == "bombaextra")
                 {
                     personagem->aumentarBomba();
                 }
-                personagem->aumentarBomba();
             }
         }
     }
@@ -33,9 +35,9 @@ void PowerUpHandler::recebeBlocosQuebrados(std::list<Bloco*> &blocosQuebrados) {
             } else if (numero < 75) {
                 powerUpsAtivos.push_back(new PowerUp(Sprite("rsc/powerup_bombaextra.img"),bloco->getPosL(), bloco->getPosC(), "bombaextra"));   // 25% de chance
             } else if (numero < 90) {
-                powerUpsAtivos.push_back(new PowerUp(Sprite("rsc/powerup_vida.img"),bloco->getPosL(), bloco->getPosC(), "vida"));         // 15% de chance
+                powerUpsAtivos.push_back(new PowerUp(Sprite("rsc/powerup_vida.img",COR::ROSA),bloco->getPosL(), bloco->getPosC(), "vida"));         // 15% de chance
             } else {
-                powerUpsAtivos.push_back(new PowerUp(Sprite("rsc/powerup_bombaforte.img"),bloco->getPosL(), bloco->getPosC(), "bombaforte"));     // 10% de chance
+                powerUpsAtivos.push_back(new PowerUp(Sprite("rsc/powerup_bombaforte.img",COR::VERDE),bloco->getPosL(), bloco->getPosC(), "bombaforte"));     // 10% de chance
             }
     }
 }

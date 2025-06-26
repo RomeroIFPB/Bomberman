@@ -2,8 +2,17 @@
 #include <iostream>
 void BombaHandler::comunicaAtivas(std::list<Personagem*> soltas) {
     for (auto &personagem : soltas) {
-        Bomba *bomba = new Bomba(personagem);
-        bombasAtivas.push_back(bomba);
+        if(personagem->getBuffsBomba() <= 0)
+        {
+            Bomba *bomba = new Bomba(personagem,false);
+            bombasAtivas.push_back(bomba);
+        }
+        else if(personagem->getBuffsBomba() > 0)
+        {
+            Bomba *bomba = new Bomba(personagem,true);
+            bombasAtivas.push_back(bomba);
+            personagem->tirarBuff();
+        }
     }
 }
 void BombaHandler::LimpaExplodidas() {
@@ -22,7 +31,8 @@ void BombaHandler::diminuiPavios()
             bombasExplodidas.push_back(*it);
             (*it)->getDono()->restituirBomba();
             it = bombasAtivas.erase(it);
-        } else {
+        } 
+        else {
             (*it)->diminuirPavio();
             ++it;
         }
