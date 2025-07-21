@@ -39,6 +39,14 @@ void BombaHandler::diminuiPavios()
 
     }
 }
+void BombaHandler::limpaTudo() {
+    for (auto it = bombasAtivas.begin(); it != bombasAtivas.end(); ++it) {
+        delete *it; // Libera a memória da bomba
+    }
+    bombasAtivas.clear();
+    
+    LimpaExplodidas();
+}
 void BombaHandler::update() {
     LimpaExplodidas();
     for (auto it = bombasAtivas.begin() ; it != bombasAtivas.end() ; ++it)

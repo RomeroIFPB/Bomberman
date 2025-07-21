@@ -5,7 +5,7 @@
 class Bomba : public ObjetoDeJogo
 {
     public:
-        Bomba(Personagem *dono, bool buff) : ObjetoDeJogo("Bomba", Sprite("rsc/bomba.img"), dono->getPosL(), dono->getPosC()), pavio(3), dono(dono), buff(buff) {}
+        Bomba(Personagem *dono, bool buff) : ObjetoDeJogo("Bomba", Sprite("rsc/bomba.img"), dono->getPosL(), dono->getPosC()), pavio(5), dono(dono), buff(buff) {}
         virtual ~Bomba() {}
 
         int getPavio() const { return pavio; }

@@ -61,6 +61,17 @@ void PowerUpHandler::LimpaConsumidos() {
     powerUpsConsumidos.clear();
 }
 
+void PowerUpHandler::limpaTudo() {
+    for (auto &powerup : powerUpsAtivos) {
+        delete powerup; // Libera a memória do power-up
+    }
+    powerUpsAtivos.clear();
+    for (auto &powerup : powerUpsConsumidos) {
+        delete powerup; // Libera a memória do power-up consumido
+    }
+    powerUpsConsumidos.clear();
+}
+
 void PowerUpHandler::update() {
     for (auto &powerup : powerUpsAtivos) {
         if (powerup->getActive()) {

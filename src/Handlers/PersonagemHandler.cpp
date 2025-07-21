@@ -103,7 +103,52 @@ bool PersonagemHandler::tem_barreira(char tecla, Personagem* &p, std::list<Bloco
         return false;
     }
 }
+void PersonagemHandler::tem_personagem(char tecla,Personagem* &p) 
+{
+    switch (tecla) {
+        case 'w':
+            for(auto &personagem : personagens)
+            {
+                if(p->getName() == "Bomberman" && personagem->getName() != "Bomberman" && p->getPosL() - 3 == personagem->getPosL() && p->getPosC() == personagem->getPosC())
+                {
+                    p->diminuirVida();
+                    break;
+                }
+            }
+            break;
+        case 's':
+            for(auto &personagem : personagens)
+            {
+                if(p->getName() == "Bomberman" && personagem->getName() != "Bomberman" && p->getPosL() + 3 == personagem->getPosL() && p->getPosC() == personagem->getPosC())
+                {
+                    p->diminuirVida();
+                    break;
+                }
+            }
 
+            break;
+        case 'a':
+            for(auto &personagem : personagens)
+            {
+                if(p->getName() == "Bomberman" && personagem->getName() != "Bomberman" && p->getPosL() == personagem->getPosL() && p->getPosC() - 7 == personagem->getPosC())
+                {
+                    p->diminuirVida();
+                    break;
+                }
+            }
+            break;
+        case 'd':
+            for(auto &personagem : personagens)
+            {
+                if(p->getName() == "Bomberman" && personagem->getName() != "Bomberman" && p->getPosL() == personagem->getPosL() && p->getPosC() + 7 == personagem->getPosC())
+                {
+                    p->diminuirVida();
+                    break;
+                }
+            }
+            break;
+    }
+}
 void PersonagemHandler::tomarDecisoes(char tecla, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas,std::vector<std::vector<int>> &matriz) 
 {
     for (auto &personagem : personagens) {
@@ -113,21 +158,25 @@ void PersonagemHandler::tomarDecisoes(char tecla, std::list<Bloco*> &blocos, std
             {
                 case 'w':
                     if (!tem_barreira('w', personagem, blocos, bombas)) {
+                        tem_personagem('w', personagem);
                         personagem->mover('w');
                     }
                     break;
                 case 's':
                     if (!tem_barreira('s', personagem, blocos, bombas)) {
+                        tem_personagem('s', personagem);
                         personagem->mover('s');
                     }
                     break;
                 case 'a':
                     if (!tem_barreira('a', personagem, blocos, bombas)) {
+                        tem_personagem('a', personagem);
                         personagem->mover('a');
                     }
                     break;
                 case 'd':
                     if (!tem_barreira('d', personagem, blocos, bombas)) {
+                        tem_personagem('d', personagem);
                         personagem->mover('d');
                     }
                     break;
@@ -165,9 +214,34 @@ void PersonagemHandler::recebePersonagensColididos(std::list<Personagem*> &colid
     }
 }
 
+void PersonagemHandler::limpaTudo() 
+{
+    for (auto it = personagens.begin(); it != personagens.end(); ++it) {
+        delete *it; // Libera a memória do personagem
+    }
+    personagens.clear();
+    
+    for (auto it = soltou_bomba.begin(); it != soltou_bomba.end(); ++it) {
+        delete *it; // Libera a memória do personagem
+    }
+    soltou_bomba.clear();
+}
+
 void PersonagemHandler::limpaBombardeios() 
 {
     soltou_bomba.clear();
+}
+
+void PersonagemHandler::limpaMortos()
+{
+    for (auto it = personagens.begin(); it != personagens.end(); ) {
+        if ((*it)->getActive() == false) {
+            delete *it;                // Libera a memória
+            it = personagens.erase(it);    // Remove da lista e avança o iterador
+        } else {
+            ++it;                      // Só avança se não remover
+        }
+    }
 }
 
 void PersonagemHandler::update() 
@@ -183,6 +257,7 @@ void PersonagemHandler::update()
         if ((*it)->getActive())
             (*it)->update();
     }
+    limpaMortos();
 }
 
 void PersonagemHandler::draw(SpriteBase &screen, int x, int y) 

@@ -18,6 +18,7 @@ public:
     void adicionarPersonagem(Personagem *personagem);
 
     std::list<Personagem*> getSoltas() const {return soltou_bomba;};
+    void limpaMortos();
     void tomarDecisoes(char tecla, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas, std::vector<std::vector<int>> &matriz);
     void designaBomba(Personagem *p);
     void recebePersonagensColididos(std::list<Personagem*> &colididos);
@@ -25,7 +26,8 @@ public:
     void update() override;
     void draw(SpriteBase &screen, int x, int y) override;
     bool tem_barreira(char tecla, Personagem* &p, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas);
-
+    void tem_personagem(char tecla, Personagem* &p);
+    void limpaTudo();
 private:
     std::list<Personagem*> personagens;
     std::list <Personagem*> soltou_bomba;

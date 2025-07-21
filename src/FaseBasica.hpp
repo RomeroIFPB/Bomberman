@@ -3,6 +3,7 @@
 #include "../ASCII_Engine/Fase.hpp"
 #include "Entidades/Bomberman.hpp"
 #include "Entidades/Acefalo.hpp"
+#include "Entidades/Inimigo.hpp"
 #include "Handlers/PersonagemHandler.hpp"
 #include "Handlers/BombaHandler.hpp"
 #include "Handlers/FogoHandler.hpp"
@@ -17,6 +18,7 @@ class FaseBasica : public Fase
         virtual ~FaseBasica() {}
 
         void atualizarMatriz();
+        void limparObjetos();
         void init() override;
         unsigned run(SpriteBuffer &screen) override;
     private:
@@ -26,7 +28,10 @@ class FaseBasica : public Fase
         BlocoHandler* bloco_handler;
         PowerUpHandler* powerup_handler;
         std::vector<std::vector<int>> matriz_entidades;
-        Bomberman *p1;
+        Bomberman* p1;
+        Inimigo* inimigo;
+        Acefalo* acefalo;
+        Acefalo* acefalo2;
 
         TextSprite* lifebomberman;
         TextSprite* bombasbomberman;

@@ -16,6 +16,8 @@ class Fase : public RenderBase
 public:
 
 	enum {
+		GAME_START,
+		GAME_WIN,
 		GAME_OVER,										//jogador nao completou fase
 		MENU,											//opcao padrao para indicar fase menu
 		OP_1, OP_2, OP_3, OP_4, OP_5,					//opcoes para menu

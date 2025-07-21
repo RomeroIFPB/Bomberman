@@ -82,6 +82,27 @@ void FogoHandler::draw(SpriteBase &screen, int x, int y)
     }
 }
 
+void FogoHandler::limpaTudo() {
+    LimpaAcabados();
+    for (auto it = fogos_ativos.begin(); it != fogos_ativos.end(); ++it) {
+        delete *it; // Libera a memória do fogo
+        fogos_ativos.erase(it); // Remove o fogo da lista
+    }
+    fogos_ativos.clear();
+
+    for (auto it = blocos_colididos.begin(); it != blocos_colididos.end(); ++it) {
+        delete *it; // Libera a memória do bloco
+        blocos_colididos.erase(it); // Remove o bloco da lista
+    }
+    blocos_colididos.clear();
+    for (auto it = personagens_colididos.begin(); it != personagens_colididos.end(); ++it) {
+        delete *it; // Libera a memória do personagem
+        personagens_colididos.erase(it); // Remove o personagem da lista
+    }
+    personagens_colididos.clear();
+    
+}
+
 void FogoHandler::calcularExplosao(Bomba *bomba,std::list<Bloco*> &blocos, std::list<Personagem*> &personagens) 
 {
     if(bomba->getBuff() == false)
