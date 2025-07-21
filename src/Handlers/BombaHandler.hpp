@@ -14,6 +14,7 @@ class BombaHandler : public ObjetoDeJogo
         void comunicaAtivas(std::list<Personagem*> soltas);
         void LimpaExplodidas();
         void diminuiPavios();
+        void limpaTudo();
         void update() override;
         void draw(SpriteBase &screen, int x = 0, int y = 0) override;
         std::list<Bomba*>& getAtivas() {return bombasAtivas;};

@@ -3,7 +3,7 @@
 
 void FaseBasica::init() 
 {
-    Keyboard::setMode(Keyboard::BLOCKING);
+    Keyboard::setMode(Keyboard::NONBLOCKING);
 
 	// Inicialização dos Handlers
 	personagem_handler = new PersonagemHandler("Personagem", Sprite("rsc/HandlerSprite.img"),0,0);
@@ -20,16 +20,23 @@ void FaseBasica::init()
 	// Inicialização de entidades
 
 	// Personagens:
-	p1 = new Bomberman("Player1", Sprite("rsc/bomberman.img"), 35, 7, 3, 1, 1);
+	p1 = new Bomberman("Bomberman", Sprite("rsc/bomberman.img"), 35, 7, 3, 1, 1);
 	personagem_handler->adicionarPersonagem(p1);
-	//Acefalo* acefalo = new Acefalo("Acefalo", Sprite("rsc/bomberman.img"), 5, 133, 1, 1, 1);
-	//personagem_handler->adicionarPersonagem(acefalo);
+
+	inimigo = new Inimigo("Inimigo",Sprite("rsc/inimigo.img"),5,133,3,1,1);
+	personagem_handler->adicionarPersonagem(inimigo);
+
+	acefalo = new Acefalo("Acefalo", Sprite("rsc/acefalo.img"), 8, 14, 1, 1, 1);
+	personagem_handler->adicionarPersonagem(acefalo);
+
+	acefalo2 = new Acefalo("Acefalo", Sprite("rsc/acefalo.img"), 23, 126, 1, 1, 1);
+	personagem_handler->adicionarPersonagem(acefalo2);
 	// Adiciona os personagens ao handler
 std::vector<std::vector<int>> matriz_inicial = {
-    {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0}, 
-    {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-    {1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0},
-    {0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1},
+    {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0}, 
+    {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0},
+    {1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0},
+    {0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1},
     {1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0},
     {0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1},
     {1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0},
@@ -50,20 +57,21 @@ std::vector<std::vector<int>> matriz_inicial = {
 	objs.push_back(new ObjetoDeJogo("Buff",TextSprite(std::to_string(p1->getBuffsBomba())),44,17));
 	SpriteBase *tmp3 = const_cast<SpriteBase*> (objs.back()->getSprite());
 	buffbomberman = dynamic_cast<TextSprite*> (tmp3);
+	
+	// Infos Inimigo
 
-	/*
-	objs.push_back(new ObjetoDeJogo("Life",TextSprite("1"),42,17));
-	SpriteBase *tmp = const_cast<SpriteBase*> (objs.back()->getSprite());
-	lifebomberman = dynamic_cast<TextSprite*> (tmp);
+	objs.push_back(new ObjetoDeJogo("Life",TextSprite(std::to_string(inimigo->getVidas())),42,125));
+	SpriteBase *tmpi = const_cast<SpriteBase*> (objs.back()->getSprite());
+	lifeinimigo = dynamic_cast<TextSprite*> (tmpi);
 
-	objs.push_back(new ObjetoDeJogo("Life",TextSprite("1"),42,17));
-	SpriteBase *tmp = const_cast<SpriteBase*> (objs.back()->getSprite());
-	lifebomberman = dynamic_cast<TextSprite*> (tmp);
+	objs.push_back(new ObjetoDeJogo("Bombas",TextSprite(std::to_string(inimigo->getBombasDisponiveis())),43,125));
+	SpriteBase *tmpi2 = const_cast<SpriteBase*> (objs.back()->getSprite());
+	bombasinimigo = dynamic_cast<TextSprite*> (tmpi2);
 
-	objs.push_back(new ObjetoDeJogo("Life",TextSprite("1"),42,17));
-	SpriteBase *tmp = const_cast<SpriteBase*> (objs.back()->getSprite());
-	lifebomberman = dynamic_cast<TextSprite*> (tmp);
-	*/
+	objs.push_back(new ObjetoDeJogo("Buff",TextSprite(std::to_string(inimigo->getBuffsBomba())),44,125));
+	SpriteBase *tmpi3 = const_cast<SpriteBase*> (objs.back()->getSprite());
+	buffinimigo = dynamic_cast<TextSprite*> (tmpi3);
+
 
 
 
@@ -81,14 +89,19 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
     
     while(true)
     {	
+		// Atualiza informações do bomberman
 		lifebomberman->setText(std::to_string(p1->getVidas()));
 		bombasbomberman->setText(std::to_string(p1->getBombasDisponiveis()));
 		buffbomberman->setText(std::to_string(p1->getBuffsBomba()));
+		// Atualiza informações do inimigo
+		lifeinimigo->setText(std::to_string(inimigo->getVidas()));
+		bombasinimigo->setText(std::to_string(inimigo->getBombasDisponiveis()));
+		buffinimigo->setText(std::to_string(inimigo->getBuffsBomba()));
 		
         char tecla = Keyboard::read();
 		if (tecla == 'q' || tecla == 'Q') 
 		{
-			return Fase::END_GAME;
+			return Fase::MENU;
 		}
 		
 		personagem_handler->tomarDecisoes(tecla, bloco_handler->getBlocosAtivos(), bomba_handler->getAtivas(),matriz_entidades);
@@ -107,8 +120,11 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		personagem_handler->recebePersonagensColididos(fogo_handler->getPersonagensColididos());
 
 		if(p1->getVidas() <= 0) {
-			std::cout << "GAME OVER" << std::endl;
 			return Fase::GAME_OVER;
+		}
+
+		if(inimigo->getVidas() <= 0) {
+			return Fase::GAME_WIN;
 		}
 
 		
@@ -142,8 +158,15 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		for(auto &powerup : powerup_handler->getPowerUpsAtivos()) {
 			std::cout << powerup->getPosL() << " " << powerup->getPosC() << std::endl;
 		}
+		
+	    for (const auto& linha : matriz_entidades) {
+        for (int valor : linha) {
+            std::cout << valor << " ";
+        }
+        std::cout << "\n";
 		*/
     }
+    
 	
 	
 	return 0;
@@ -182,9 +205,10 @@ void FaseBasica::atualizarMatriz()
 	for (auto &powerup : powerup_handler->getPowerUpsAtivos())
 		setNaMatriz(powerup->getPosL(), powerup->getPosC(), 4);
 
-	for (auto &personagem : personagem_handler->getPersonagens())
-		setNaMatriz(personagem->getPosL(), personagem->getPosC(), 5);
+	setNaMatriz(p1->getPosL(), p1->getPosC(),5);
+	setNaMatriz(inimigo->getPosL(), inimigo->getPosC(),6);
 		
 }	
+
 
 

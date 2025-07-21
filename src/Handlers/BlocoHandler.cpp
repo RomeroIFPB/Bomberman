@@ -52,6 +52,18 @@ void BlocoHandler::update() {
     LimpaQuebrados();
 }
 
+void BlocoHandler::limpaTudo() {
+    for (auto it = blocosAtivos.begin(); it != blocosAtivos.end(); ++it) {
+        delete *it; // Libera a memória do bloco
+    }
+    blocosAtivos.clear();
+    
+    for (auto it = blocosQuebrados.begin(); it != blocosQuebrados.end(); ++it) {
+        delete *it; // Libera a memória do bloco quebrado
+    }
+    blocosQuebrados.clear();
+}
+
 void BlocoHandler::draw(SpriteBase &screen, int x, int y) {
     for (auto it = blocosAtivos.begin(); it != blocosAtivos.end(); ++it) {
         if ((*it)->getActive())

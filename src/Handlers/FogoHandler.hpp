@@ -20,6 +20,7 @@ class FogoHandler : public ObjetoDeJogo
         void LimpaAcabados();
         void diminuiTempos();
         void calcularExplosao(Bomba *bomba, std::list<Bloco*> &blocos, std::list<Personagem*> &personagens);
+        void limpaTudo();
         void update();
         void draw(SpriteBase &screen, int x, int y);
     private:

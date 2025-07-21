@@ -12,7 +12,7 @@ class BlocoHandler : public ObjetoDeJogo
         void carregaMapa(std::vector<std::vector<int>> &matriz);
         std::list<Bloco*>& getQuebrados() {return blocosQuebrados;}
         void recebeBlocosColididos(std::list<Bloco*> &blocosColididos);
-
+        void limpaTudo();
         void LimpaQuebrados();
 
         void update();

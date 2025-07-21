@@ -15,7 +15,7 @@ public:
     void SearchConsumidos(std::list<Personagem*> &personagens);
     void recebeBlocosQuebrados(std::list<Bloco*> &blocosQuebrados);
     void LimpaConsumidos();
-    
+    void limpaTudo();
     void update();
     void draw(SpriteBase &screen, int x, int y);
 
