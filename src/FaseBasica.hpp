@@ -15,7 +15,6 @@ class FaseBasica : public Fase
 {
     public:
         FaseBasica(std::string name, const SpriteBase &bkg) : Fase(name,bkg) {}
-        virtual ~FaseBasica() {}
 
         void atualizarMatriz();
         void limparObjetos();

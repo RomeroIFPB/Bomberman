@@ -10,12 +10,21 @@ class PowerUpHandler : public ObjetoDeJogo
 public:
     PowerUpHandler(const std::string &nome, const Sprite &sprite, int x, int y)
         : ObjetoDeJogo(nome, sprite, x, y) {}
+    virtual ~PowerUpHandler() {
+        for (auto &powerup : powerUpsAtivos) {
+            delete powerup;
+        }
+        powerUpsAtivos.clear();
+        for (auto &powerup : powerUpsConsumidos) {
+            delete powerup;
+        }
+        powerUpsConsumidos.clear();
+    }
 
     std::list<PowerUp*>& getPowerUpsAtivos() { return powerUpsAtivos; }
     void SearchConsumidos(std::list<Personagem*> &personagens);
     void recebeBlocosQuebrados(std::list<Bloco*> &blocosQuebrados);
     void LimpaConsumidos();
-    void limpaTudo();
     void update();
     void draw(SpriteBase &screen, int x, int y);
 

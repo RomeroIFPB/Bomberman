@@ -29,7 +29,7 @@ public:
 
 
 	Fase(std::string name, const SpriteBase &bkg) : name(name),background(bkg.copia()) {}
-	virtual ~Fase();
+	virtual ~Fase() {};
 	
 	Fase(const Fase &f);
 	
