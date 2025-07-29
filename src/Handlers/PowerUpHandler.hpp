@@ -10,15 +10,18 @@ class PowerUpHandler : public ObjetoDeJogo
 public:
     PowerUpHandler(const std::string &nome, const Sprite &sprite, int x, int y)
         : ObjetoDeJogo(nome, sprite, x, y) {}
-    virtual ~PowerUpHandler() {
-        for (auto &powerup : powerUpsAtivos) {
-            delete powerup;
+    virtual ~PowerUpHandler(){
+        LimpaConsumidos();
+        for (auto &pu : powerUpsAtivos) {
+            delete pu;
         }
         powerUpsAtivos.clear();
-        for (auto &powerup : powerUpsConsumidos) {
-            delete powerup;
+        for (auto &pu : powerUpsConsumidos) {
+            delete pu;
         }
+        
         powerUpsConsumidos.clear();
+        powerUpsAtivos.clear();
     }
 
     std::list<PowerUp*>& getPowerUpsAtivos() { return powerUpsAtivos; }

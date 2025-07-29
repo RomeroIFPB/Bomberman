@@ -8,13 +8,16 @@ class BombaHandler : public ObjetoDeJogo
     public:
         BombaHandler(const std::string &name, const SpriteBase &sprite, int posL, int posC)
             : ObjetoDeJogo(name, sprite, posL, posC) {}
-        virtual ~BombaHandler() {
-            for (auto &b : bombasAtivas) {
-                delete b;
+        virtual ~BombaHandler()
+        {
+            LimpaExplodidas();
+            for (auto &bomba : bombasAtivas) {
+                delete bomba; // Libera a memória da bomba ativa
             }
             bombasAtivas.clear();
-            for (auto &b : bombasExplodidas) {
-                delete b;
+            
+            for (auto &bomba : bombasExplodidas) {
+                delete bomba; // Libera a memória da bomba explodida
             }
             bombasExplodidas.clear();
         }

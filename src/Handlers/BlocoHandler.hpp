@@ -7,14 +7,16 @@ class BlocoHandler : public ObjetoDeJogo
     public:
         BlocoHandler(const std::string &nome, const Sprite &sprite, int x, int y)
             : ObjetoDeJogo(nome, sprite, x, y) {}
-        virtual ~BlocoHandler() {
-            for (auto &b : blocosAtivos) {
-                delete b;
+        virtual ~BlocoHandler()
+        {
+            LimpaQuebrados();
+            for (auto &bloco : blocosAtivos) {
+                delete bloco; // Libera a memória do bloco ativo
             }
             blocosAtivos.clear();
             
-            for (auto &b : blocosQuebrados) {
-                delete b;
+            for (auto &bloco : blocosQuebrados) {
+                delete bloco; // Libera a memória do bloco quebrado
             }
             blocosQuebrados.clear();
         }

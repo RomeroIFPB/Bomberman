@@ -102,18 +102,7 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
         char tecla = Keyboard::read();
 		if (tecla == 'q' || tecla == 'Q') 
 		{
-			delete personagem_handler;
-            delete bomba_handler;
-            delete fogo_handler;
-            delete bloco_handler;
-            delete powerup_handler;
-
-            delete lifebomberman;
-            delete bombasbomberman;
-            delete buffbomberman;
-            delete lifeinimigo;
-            delete bombasinimigo;
-            delete buffinimigo;
+			
 			return Fase::MENU;
 		}
 		
