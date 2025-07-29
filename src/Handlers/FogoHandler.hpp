@@ -9,7 +9,18 @@ class FogoHandler : public ObjetoDeJogo
     public:
         FogoHandler(const std::string &nome, const Sprite &sprite, int x, int y)
             : ObjetoDeJogo(nome, sprite, x, y) {}
-
+        virtual ~FogoHandler(){
+            LimpaAcabados();
+            for (auto &fogo : fogos_ativos) {
+                delete fogo; // Libera a memória do fogo ativo
+            }
+            fogos_ativos.clear();
+            
+            for (auto &fogo : fogos_acabados) {
+                delete fogo; // Libera a memória do fogo acabado
+            }
+            fogos_acabados.clear();
+        }
         std::list<Fogo*>& getFogosAtivos() { return fogos_ativos; }
         std::list<Bloco*>& getBlocosColididos() { return blocos_colididos; }
         std::list<Personagem*>& getPersonagensColididos() { return personagens_colididos; }

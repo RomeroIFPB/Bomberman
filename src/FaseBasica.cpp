@@ -89,6 +89,7 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
     
     while(true)
     {	
+		
 		// Atualiza informações do bomberman
 		lifebomberman->setText(std::to_string(p1->getVidas()));
 		bombasbomberman->setText(std::to_string(p1->getBombasDisponiveis()));
@@ -101,6 +102,7 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
         char tecla = Keyboard::read();
 		if (tecla == 'q' || tecla == 'Q') 
 		{
+			
 			return Fase::MENU;
 		}
 		
@@ -113,20 +115,22 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		fogo_handler->checarColisaoBloco(bloco_handler->getBlocosAtivos());
 		
 		bloco_handler->recebeBlocosColididos(fogo_handler->getBlocosColididos());
-
+		
 		powerup_handler->recebeBlocosQuebrados(bloco_handler->getQuebrados());
 
 		powerup_handler->SearchConsumidos(personagem_handler->getPersonagens());
 		personagem_handler->recebePersonagensColididos(fogo_handler->getPersonagensColididos());
-
+		
 		if(p1->getVidas() <= 0) {
 			return Fase::GAME_OVER;
 		}
+		
 
 		if(inimigo->getVidas() <= 0) {
 			return Fase::GAME_WIN;
 		}
 
+		
 		
 
 		

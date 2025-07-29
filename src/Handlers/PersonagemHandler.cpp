@@ -214,19 +214,6 @@ void PersonagemHandler::recebePersonagensColididos(std::list<Personagem*> &colid
     }
 }
 
-void PersonagemHandler::limpaTudo() 
-{
-    for (auto it = personagens.begin(); it != personagens.end(); ++it) {
-        delete *it; // Libera a memória do personagem
-    }
-    personagens.clear();
-    
-    for (auto it = soltou_bomba.begin(); it != soltou_bomba.end(); ++it) {
-        delete *it; // Libera a memória do personagem
-    }
-    soltou_bomba.clear();
-}
-
 void PersonagemHandler::limpaBombardeios() 
 {
     soltou_bomba.clear();

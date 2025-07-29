@@ -15,10 +15,15 @@ class FaseBasica : public Fase
 {
     public:
         FaseBasica(std::string name, const SpriteBase &bkg) : Fase(name,bkg) {}
-        virtual ~FaseBasica() {}
-
+        ~FaseBasica()
+        {
+            for(auto obj : objs) 
+            {
+				delete obj;
+			}
+			objs.clear();
+        }
         void atualizarMatriz();
-        void limparObjetos();
         void init() override;
         unsigned run(SpriteBuffer &screen) override;
     private:

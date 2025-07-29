@@ -6,13 +6,12 @@
 void Game::run()
 {
     SpriteBuffer screen(147,46,' '); // LARGURA , ALTURA
-    FaseBasica fase1("Fase1", Sprite("rsc/background.img"));
-    Menu faseMenu("Menu", SpriteAnimado("rsc/menu.img",5));
-    Vitoria fasevitoria("Vitoria", Sprite("rsc/gamewin.img"));
-    Derrota fasederrota("Derrota", Sprite("rsc/gameover.img"));
+    
+
 
     while (true)
     {
+        Menu faseMenu("Menu", SpriteAnimado("rsc/menu.img",5));
         faseMenu.init();
         unsigned resultadomenu = faseMenu.run(screen);
         
@@ -21,14 +20,17 @@ void Game::run()
         if (resultadomenu == Fase::END_GAME) {
             return; // Encerrar o jogo
         } else if (resultadomenu == Fase::GAME_START) {
+            FaseBasica fase1("Fase1", Sprite("rsc/background.img"));
             fase1.init();
             resultadojogo = fase1.run(screen);
         }
 
         if (resultadojogo == Fase::GAME_WIN) {
+            Vitoria fasevitoria("Vitoria", Sprite("rsc/gamewin.img"));
             fasevitoria.init();
             opcaofinal = fasevitoria.run(screen);
         } else if (resultadojogo == Fase::GAME_OVER) {
+            Derrota fasederrota("Derrota", Sprite("rsc/gameover.img"));
             fasederrota.init();
             opcaofinal = fasederrota.run(screen);
         }

@@ -11,7 +11,14 @@ public:
     PersonagemHandler(const std::string &name, const SpriteBase &sprite, int posL, int posC)
         : ObjetoDeJogo(name, sprite,posL,posC) {}
 
-    virtual ~PersonagemHandler() {}
+    virtual ~PersonagemHandler(){
+        limpaMortos(); // Limpa os personagens mortos
+        for (auto &p : personagens) {
+            delete p; // Libera a memória do personagem
+        }
+        personagens.clear();
+        soltou_bomba.clear();
+    }
 
     std::list<Personagem*>& getPersonagens() {return personagens;};
 

@@ -24,9 +24,7 @@ void Personagem::mover(char entrada) {
 void Personagem::diminuirVida() {
     if (vidas > 0) {
         vidas--;
-        std::cout << "Vida do personagem " << getName() << " diminuída. Vidas restantes: " << vidas << std::endl;
     } else {
-        std::cout << "O personagem " << getName() << " já não tem vidas restantes." << std::endl;
     }
 }
 
