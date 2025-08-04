@@ -11,7 +11,8 @@ public:
     PersonagemHandler(const std::string &name, const SpriteBase &sprite, int posL, int posC)
         : ObjetoDeJogo(name, sprite,posL,posC) {}
 
-    virtual ~PersonagemHandler(){
+    virtual ~PersonagemHandler()
+    {
         limpaMortos(); // Limpa os personagens mortos
         for (auto &p : personagens) {
             delete p; // Libera a memória do personagem
@@ -35,6 +36,7 @@ public:
     bool tem_barreira(char tecla, Personagem* &p, std::list<Bloco*> &blocos, std::list<Bomba*> &bombas);
     void tem_personagem(char tecla, Personagem* &p);
     void limpaTudo();
+    
 private:
     std::list<Personagem*> personagens;
     std::list <Personagem*> soltou_bomba;

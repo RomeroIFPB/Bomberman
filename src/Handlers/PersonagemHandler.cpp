@@ -199,7 +199,8 @@ void PersonagemHandler::adicionarPersonagem(Personagem *personagem)
     }
 }
 
-void PersonagemHandler::designaBomba(Personagem *p) {
+void PersonagemHandler::designaBomba(Personagem *p) 
+{
     soltou_bomba.push_back(p);
 }
 

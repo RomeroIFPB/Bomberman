@@ -23,7 +23,7 @@ void FaseBasica::init()
 	p1 = new Bomberman("Bomberman", Sprite("rsc/bomberman.img"), 35, 7, 3, 1, 1);
 	personagem_handler->adicionarPersonagem(p1);
 
-	inimigo = new Inimigo("Inimigo",Sprite("rsc/inimigo.img"),5,133,3,1,1);
+	inimigo = new Inimigo("Inimigo",Sprite("rsc/inimigo.img"),5,133,10,1,1);
 	personagem_handler->adicionarPersonagem(inimigo);
 
 	acefalo = new Acefalo("Acefalo", Sprite("rsc/acefalo.img"), 8, 14, 1, 1, 1);
@@ -121,12 +121,14 @@ unsigned FaseBasica::run(SpriteBuffer &screen)
 		powerup_handler->SearchConsumidos(personagem_handler->getPersonagens());
 		personagem_handler->recebePersonagensColididos(fogo_handler->getPersonagensColididos());
 		
-		if(p1->getVidas() <= 0) {
+		if(p1->getVidas() <= 0) 
+		{
 			return Fase::GAME_OVER;
 		}
 		
 
-		if(inimigo->getVidas() <= 0) {
+		if(inimigo->getVidas() <= 0) 
+		{
 			return Fase::GAME_WIN;
 		}
 
